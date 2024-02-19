@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { Button } from "react-native-paper";
+import { Appbar, Button } from "react-native-paper";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import Details from "./Details";
@@ -97,4 +97,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
 export default Home;

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../../FirebaseConfig";
 import { ActivityIndicator, Button } from "react-native-paper";
@@ -53,7 +53,43 @@ const StudentProfile = ({ navigation }: RouterProps) => {
         <ActivityIndicator size="large" color="black" />
       ) : (
         <>
-          <Text>Name :{username}</Text>
+            <View style={[styles.card, styles.cardElevated]}>
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>
+                    {username}
+                </Text>
+            </View>
+            <Image
+                source={{uri:'https://media.licdn.com/dms/image/D4D03AQHPjBYoXiTIIA/profile-displayphoto-shrink_400_400/0/1706794512809?e=1714003200&v=beta&t=wjtb89H-cJyJZrZO8VwmCMSd11EvPLA0zZ-T4h8YpBs'}}
+                style={styles.cardImage}
+            />
+            <View style={styles.cardBodyContainer}>
+                <Text style={styles.cardBodyText}>
+                    UID: {uid}
+                </Text>
+                <Text style={styles.cardBodyText}>
+                    EMAIl: {email}
+                </Text>
+            </View>
+            <View style={styles.cardFooterContainer}>
+                <TouchableOpacity onPress={() => {}}>
+                    <View style={styles.cardFooterLeft}>
+                        <Text style={styles.cardFooterText}>
+                            Check Attendance
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {signOut(FIREBASE_AUTH);
+              navigation.navigate("LandingPage");}}>
+                    <View style={styles.cardFooterRight}>
+                        <Text style={styles.cardFooterText}>
+                            Logout
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+          </View>
+          {/* <Text>Name :{username}</Text>
           <Text>UID :{uid}</Text>
           <Text>Email :{email}</Text>
           <Button>View Attendance</Button>
@@ -64,11 +100,78 @@ const StudentProfile = ({ navigation }: RouterProps) => {
             }}
           >
             Logout
-          </Button>
+          </Button> */}
         </>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    width: 380,
+    height: 500,
+    borderRadius: 10,
+    marginVertical: 12,
+    marginHorizontal: 16,
+    backgroundColor: '#4fade3',
+  },
+  cardElevated: {
+      elevation: 4,
+      shadowOffset: {
+          height: 4,
+          width: 4,
+      },
+      shadowOpacity: 0.4,
+  },
+  headerContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  headerText: {
+      textAlign: 'center',
+      padding: 10,
+      fontSize: 22,
+      fontWeight: 'bold',
+      color: 'black',
+  },
+  cardImage: {
+      height: 300,
+      marginHorizontal: 10,
+      marginBottom: 10,
+      borderRadius: 4,
+  },
+  cardBodyContainer: {
+      alignItems: 'center',
+      padding: 4,
+  },
+  cardBodyText: {
+      textAlign: 'center',
+      fontSize: 16,
+      fontWeight: 'bold',
+  },
+  cardFooterContainer: {
+      alignItems: 'center',
+      flex : 1,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+  },
+  cardFooterLeft: {
+      backgroundColor: '#03045e',
+      borderRadius: 12,
+      margin: 10,
+  },
+  cardFooterRight: {
+      backgroundColor: '#03045e',
+      borderRadius: 12,
+      margin: 10,
+  },
+  cardFooterText: {
+      color: 'white',
+      fontWeight: 'bold',
+      padding: 12,
+      fontSize: 20,
+  },
+})
 
 export default StudentProfile;

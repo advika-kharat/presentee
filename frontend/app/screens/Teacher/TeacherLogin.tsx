@@ -39,7 +39,7 @@ const TeacherLogin = ({ navigation }: RouterProps) => {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding">
-        <Text>Teacher</Text>
+      <Text style={styles.textStyle}>Log in as Teacher</Text>
         <TextInput
           style={styles.input}
           mode="outlined"
@@ -104,6 +104,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // alignItems: "center",
+  },
+  textStyle: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    margin: 10,
+    padding: 10,
+    lineHeight: 28,
   },
   input: {
     width: "80%",

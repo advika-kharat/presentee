@@ -70,16 +70,7 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Text>Teacher</Text>
-        <Text
-          style={{
-            fontWeight: "800",
-            fontSize: 30,
-            textAlign: "center",
-          }}
-        >
-          Sign Up
-        </Text>
+        <Text style={styles.textStyle}>Sign up as Teacher</Text>
         <TextInput
           style={styles.input}
           mode="outlined"
@@ -200,6 +191,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginTop: "10%",
+  },
+  textStyle: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    margin: 10,
+    padding: 10,
+    lineHeight: 28,
   },
   input: {
     width: "80%",

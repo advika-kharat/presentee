@@ -39,7 +39,7 @@ const StudentLogin = ({ navigation }: RouterProps) => {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding">
-        <Text>Student</Text>
+        <Text style={styles.textStyle}>Log in as Student</Text>
         <TextInput
           style={styles.input}
           mode="outlined"
@@ -103,7 +103,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: 'bde0fe',
     // alignItems: "center",
+  },
+  textStyle: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    margin: 10,
+    padding: 10,
+    lineHeight: 28,
   },
   input: {
     width: "80%",
