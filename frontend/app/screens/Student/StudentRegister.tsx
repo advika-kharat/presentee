@@ -8,10 +8,11 @@ import {
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useState } from "react";
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../../FirebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import PasswordValidate from "react-native-password-validate-checklist";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { doc, setDoc } from "firebase/firestore";
 
 import { NavigationProp } from "@react-navigation/native";
 interface RouterProps {
@@ -20,6 +21,7 @@ interface RouterProps {
 
 const StudentRegister = ({ navigation }: RouterProps) => {
   const [displayName, setDisplayName] = useState("");
+  const [uid, setUid] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -48,6 +50,15 @@ const StudentRegister = ({ navigation }: RouterProps) => {
       await updateProfile(userCredential.user, {
         displayName: displayName,
       });
+
+      await setDoc(doc(FIRESTORE_DB, "Student", email), {
+        name: displayName,
+        uid: uid,
+        email: email,
+        attendance: "0",
+        courses: [],
+      });
+
       navigation.navigate("StudentProfile");
       console.log("User registered successfully:", userCredential.user);
     } catch (error: any) {
@@ -78,6 +89,15 @@ const StudentRegister = ({ navigation }: RouterProps) => {
           outlineColor="black"
           activeOutlineColor="black"
           onChangeText={(text) => setDisplayName(text)}
+        />
+
+        <TextInput
+          style={styles.input}
+          mode="outlined"
+          placeholder="UID"
+          outlineColor="black"
+          activeOutlineColor="black"
+          onChangeText={(text) => setUid(text)}
         />
 
         <TextInput

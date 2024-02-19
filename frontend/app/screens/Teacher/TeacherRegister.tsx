@@ -8,10 +8,12 @@ import {
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useState } from "react";
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../../FirebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import PasswordValidate from "react-native-password-validate-checklist";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+import { doc, setDoc } from "firebase/firestore";
 
 import { NavigationProp } from "@react-navigation/native";
 interface RouterProps {
@@ -48,6 +50,13 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
       await updateProfile(userCredential.user, {
         displayName: displayName,
       });
+
+      await setDoc(doc(FIRESTORE_DB, "Teacher", email), {
+        name: displayName,
+        email: email,
+        courses: [],
+      });
+
       navigation.navigate("TeacherProfile");
       console.log("User registered successfully:", userCredential.user);
     } catch (error: any) {

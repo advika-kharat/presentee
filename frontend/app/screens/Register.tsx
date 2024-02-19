@@ -8,8 +8,8 @@ import {
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useState } from "react";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FirebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import PasswordValidate from "react-native-password-validate-checklist";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
