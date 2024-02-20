@@ -6,6 +6,7 @@ import { signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
 import { NavigationProp } from "@react-navigation/native";
+import Navbar from "../Navbar";
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
@@ -48,7 +49,9 @@ const StudentProfile = ({ navigation }: RouterProps) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View>
+    <Navbar navigation={navigation} onlyBackAction={false}/>
+    <View style={{ alignItems: "center", justifyContent: "center" }}>
       {loading ? (
         <ActivityIndicator size="large" color="black" />
       ) : (
@@ -103,6 +106,7 @@ const StudentProfile = ({ navigation }: RouterProps) => {
           </Button> */}
         </>
       )}
+    </View>
     </View>
   );
 };

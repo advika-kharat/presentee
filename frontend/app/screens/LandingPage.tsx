@@ -9,28 +9,34 @@ import StudentLogin from "./Student/StudentLogin";
 import StudentRegister from "./Student/StudentRegister";
 import TeacherLogin from "./Teacher/TeacherLogin";
 import TeacherRegister from "./Teacher/TeacherRegister";
+import LandingNavbar from "./LandingNavbar";
+
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
+
 const LandingPage = ({ navigation }: RouterProps) => {
   return (
     <View style={styles.container}>
-      <Button
-        onPress={() => {
-          navigation.navigate("Student");
-        }}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Student</Text>
-      </Button>
-      <Button
-        onPress={() => {
-          navigation.navigate("Teacher");
-        }}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Teacher</Text>
-      </Button>
+      <LandingNavbar/>
+      <View style={styles.buttonsContainer}>
+        <Button
+          onPress={() => {
+            navigation.navigate("StudentLogin");
+          }}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Student</Text>
+        </Button>
+        <Button
+          onPress={() => {
+            navigation.navigate("TeacherLogin");
+          }}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Teacher</Text>
+        </Button>
+      </View>
     </View>
   );
 };
@@ -38,10 +44,11 @@ const LandingPage = ({ navigation }: RouterProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
+  },
+  buttonsContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#2081c3',
   },
   button: {
     height: 100,
