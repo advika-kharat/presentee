@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, ActivityIndicator, StyleSheet, Image, TouchableOpacity, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../../FirebaseConfig";
 import { Button } from "react-native-paper";
@@ -47,9 +47,12 @@ const TeacherProfile = ({ navigation }: RouterProps) => {
   }, []);
 
   return (
-    <View>
+    <ImageBackground
+      source={require('../assets/background.jpg')}
+      style={styles.background}
+    >
     <Navbar navigation={navigation} onlyBackAction={false}/>
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {loading ? (
         <ActivityIndicator size="large" color="black" />
       ) : (
@@ -101,18 +104,23 @@ const TeacherProfile = ({ navigation }: RouterProps) => {
         </>
       )}
     </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   card: {
     width: 380,
     height: 500,
     borderRadius: 10,
     marginVertical: 12,
     marginHorizontal: 16,
-    backgroundColor: '#4fade3',
+    backgroundColor: 'white',
   },
   cardElevated: {
       elevation: 4,
@@ -155,17 +163,17 @@ const styles = StyleSheet.create({
       justifyContent: 'space-evenly',
   },
   cardFooterLeft: {
-      backgroundColor: '#03045e',
+      backgroundColor: '#8ecae6',
       borderRadius: 12,
       margin: 10,
   },
   cardFooterRight: {
-      backgroundColor: '#03045e',
+      backgroundColor: '#8ecae6',
       borderRadius: 12,
       margin: 10,
   },
   cardFooterText: {
-      color: 'white',
+      color: 'black',
       fontWeight: 'bold',
       padding: 12,
       fontSize: 20,

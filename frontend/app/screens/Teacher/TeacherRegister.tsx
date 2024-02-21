@@ -4,6 +4,7 @@ import {
   Text,
   KeyboardAvoidingView,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
@@ -31,6 +32,7 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
   const [validated, setValidated] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState(false);
 
   const toggleShowPassword1 = () => {
     setShowPassword1(!showPassword1);
@@ -69,130 +71,144 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Navbar navigation={navigation} onlyBackAction={true}/>
-      <ScrollView>
-        <Text style={styles.textStyle}>Sign up as Teacher</Text>
-        <TextInput
-          style={styles.input}
-          mode="outlined"
-          placeholder="Username"
-          outlineColor="black"
-          activeOutlineColor="black"
-          onChangeText={(text) => setDisplayName(text)}
-        />
+    <ImageBackground
+      source={require('../assets/background.jpg')}
+      style={styles.background}
+    >
+      <Navbar navigation={navigation} onlyBackAction={true} />
 
-        <TextInput
-          style={styles.input}
-          mode="outlined"
-          placeholder="Email"
-          outlineColor="black"
-          activeOutlineColor="black"
-          onChangeText={(text) => setEmail(text)}
-        />
-
-        <View>
+      <View style={styles.container}>
+        <ScrollView>
+          <Text style={styles.textStyle}>Sign up as Teacher</Text>
           <TextInput
             style={styles.input}
-            // secureTextEntry={true}
             mode="outlined"
-            placeholder="Password"
+            placeholder="Username"
             outlineColor="black"
             activeOutlineColor="black"
-            secureTextEntry={!showPassword1}
-            onChangeText={(text) => setPassword1(text)}
+            onChangeText={(text) => setDisplayName(text)}
           />
-          <MaterialCommunityIcons
-            name={showPassword1 ? "eye-off" : "eye"}
-            size={24}
-            color="#aaa"
-            style={styles.icon}
-            onPress={toggleShowPassword1}
-          />
-        </View>
 
-        <View>
           <TextInput
             style={styles.input}
-            secureTextEntry={!showPassword2}
             mode="outlined"
-            placeholder="Confirm Password"
+            placeholder="Email"
             outlineColor="black"
             activeOutlineColor="black"
-            onChangeText={(text) => setPassword2(text)}
+            onChangeText={(text) => setEmail(text)}
           />
 
-          <MaterialCommunityIcons
-            name={showPassword2 ? "eye-off" : "eye"}
-            size={24}
-            color="#aaa"
-            style={styles.icon}
-            onPress={toggleShowPassword2}
-          />
-        </View>
-
-        <View style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
-          {validated ? (
-            <Text> Passwords Match</Text>
-          ) : (
-            <Text> Passwords Do not Match</Text>
-          )}
-          <PasswordValidate
-            newPassword={password1}
-            confirmPassword={password2}
-            validationRules={[
-              {
-                key: "MIN_LENGTH",
-                ruleValue: 9,
-                label: "Should contain more than 9 characters",
-              },
-              { key: "LOWERCASE_LETTER" },
-              { key: "UPPERCASE_LETTER" },
-              { key: "NUMERIC" },
-              { key: "PASSWORDS_MATCH"  },
-            ]}
-            onPasswordValidateChange={(validatedBoolean) =>
-              setValidated(validatedBoolean)
-            }
-          />
-        </View>
-
-        {loading ? (
-          <ActivityIndicator size="large" color="black" />
-        ) : (
           <View>
-            <Button
-              mode="contained"
-              buttonColor="black"
-              style={styles.button}
-              onPress={() => {
-                if (validated) {
-                  signUp();
-                } else {
-                  alert("Please check all the conditions");
-                }
+            <TextInput
+              style={styles.input}
+              // secureTextEntry={true}
+              mode="outlined"
+              placeholder="Password"
+              outlineColor="black"
+              activeOutlineColor="black"
+              secureTextEntry={!showPassword1}
+              onChangeText={(text) => {
+                setPassword1(text);
+                setPasswordValidation(true);
               }}
-            >
-              Sign Up
-            </Button>
-            <Button
-              textColor="black"
-              onPress={() => navigation.navigate("TeacherLogin")}
-            >
-              Already have an account? Login
-            </Button>
+            />
+            <MaterialCommunityIcons
+              name={showPassword1 ? "eye-off" : "eye"}
+              size={24}
+              color="#aaa"
+              style={styles.icon}
+              onPress={toggleShowPassword1}
+            />
           </View>
-        )}
-      </ScrollView>
-    </View>
+
+          <View>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={!showPassword2}
+              mode="outlined"
+              placeholder="Confirm Password"
+              outlineColor="black"
+              activeOutlineColor="black"
+              onChangeText={(text) => setPassword2(text)}
+            />
+
+            <MaterialCommunityIcons
+              name={showPassword2 ? "eye-off" : "eye"}
+              size={24}
+              color="#aaa"
+              style={styles.icon}
+              onPress={toggleShowPassword2}
+            />
+          </View>
+
+          {passwordValidation && <View style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
+            {validated ? (
+              <Text> Passwords Match</Text>
+            ) : (
+              <Text> Passwords Do not Match</Text>
+            )}
+            <PasswordValidate
+              newPassword={password1}
+              confirmPassword={password2}
+              validationRules={[
+                {
+                  key: "MIN_LENGTH",
+                  ruleValue: 9,
+                  label: "Should contain more than 9 characters",
+                },
+                { key: "LOWERCASE_LETTER" },
+                { key: "UPPERCASE_LETTER" },
+                { key: "NUMERIC" },
+                { key: "PASSWORDS_MATCH" },
+              ]}
+              onPasswordValidateChange={(validatedBoolean) =>
+                setValidated(validatedBoolean)
+              }
+            />
+          </View>}
+
+          {loading ? (
+            <ActivityIndicator size="large" color="black" />
+          ) : (
+            <View>
+              <Button
+                mode="contained"
+                buttonColor="black"
+                style={styles.button}
+                onPress={() => {
+                  if (validated) {
+                    signUp();
+                  } else {
+                    alert("Please check all the conditions");
+                  }
+                }}
+              >
+                Sign Up
+              </Button>
+              <Button
+                textColor="black"
+                onPress={() => navigation.navigate("TeacherLogin")}
+              >
+                Already have an account? Login
+              </Button>
+            </View>
+          )}
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
-    // marginTop: "10%",
+    marginTop: "20%",
   },
   textStyle: {
     justifyContent: 'center',
