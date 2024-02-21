@@ -6,6 +6,8 @@ import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationProp } from "@react-navigation/native";
+import LandingNavbar from "../LandingNavbar";
+import Navbar from "../Navbar";
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
@@ -38,8 +40,9 @@ const StudentLogin = ({ navigation }: RouterProps) => {
 
   return (
     <View style={styles.container}>
-      <KeyboardAvoidingView behavior="padding">
-        <Text>Student</Text>
+      <Navbar navigation={navigation} onlyBackAction={true}/>
+      <KeyboardAvoidingView behavior="padding" style={{flex: 1, justifyContent: 'center',}}>
+        <Text style={styles.textStyle}>Log in as Student</Text>
         <TextInput
           style={styles.input}
           mode="outlined"
@@ -103,7 +106,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    // alignItems: "center",
+  },
+  textStyle: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    margin: 10,
+    padding: 10,
+    lineHeight: 28,
   },
   input: {
     width: "80%",

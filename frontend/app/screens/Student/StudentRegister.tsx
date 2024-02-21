@@ -15,6 +15,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { doc, setDoc } from "firebase/firestore";
 
 import { NavigationProp } from "@react-navigation/native";
+import Navbar from "../Navbar";
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
@@ -71,17 +72,9 @@ const StudentRegister = ({ navigation }: RouterProps) => {
 
   return (
     <View style={styles.container}>
+      <Navbar navigation={navigation} onlyBackAction={true}/>
       <ScrollView>
-        <Text>Student</Text>
-        <Text
-          style={{
-            fontWeight: "800",
-            fontSize: 30,
-            textAlign: "center",
-          }}
-        >
-          Sign Up
-        </Text>
+      <Text style={styles.textStyle}>Sign up as Student</Text>
         <TextInput
           style={styles.input}
           mode="outlined"
@@ -210,7 +203,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    marginTop: "10%",
+    // margin: "10%",
+  },
+  textStyle: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    margin: 10,
+    padding: 10,
+    lineHeight: 28,
   },
   input: {
     width: "80%",
