@@ -1,4 +1,10 @@
-import { View, StyleSheet, Text, KeyboardAvoidingView, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  KeyboardAvoidingView,
+  ImageBackground,
+} from "react-native";
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useState } from "react";
@@ -40,12 +46,15 @@ const StudentLogin = ({ navigation }: RouterProps) => {
 
   return (
     <ImageBackground
-      source={require('../assets/background.jpg')}
+      source={require("../assets/background.jpg")}
       style={styles.background}
     >
       <View style={styles.container}>
-        <Navbar navigation={navigation} onlyBackAction={true}/>
-        <KeyboardAvoidingView behavior="padding" style={{flex: 1, justifyContent: 'center',}}>
+        <Navbar navigation={navigation} onlyBackAction={true} />
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={{ flex: 1, justifyContent: "center" }}
+        >
           <Text style={styles.textStyle}>Log in as Student</Text>
           <TextInput
             style={styles.input}
@@ -118,11 +127,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textStyle: {
-    justifyContent: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    textAlign: "center",
     fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "bold",
+    color: "black",
     margin: 10,
     padding: 10,
     lineHeight: 28,

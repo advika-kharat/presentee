@@ -11,10 +11,10 @@ interface RouterProps {
 const LandingPage = ({ navigation }: RouterProps) => {
   return (
     <ImageBackground
-      source={require('./assets/background.jpg')}
+      source={require("./assets/background.jpg")}
       style={styles.background}
     >
-      <LandingNavbar/>
+      <LandingNavbar />
       <View style={styles.container}>
         <View style={styles.buttonsContainer}>
           <Button
@@ -47,18 +47,23 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center",
   },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     padding: 20,
   },
   buttonsContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     borderRadius: 30,
-    backgroundColor: '#4fade3',
+    backgroundColor: "#4fade3",
     margin: 10,
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -66,9 +71,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  }
-})
+    fontWeight: "bold",
+    color: "white",
+  },
+});
 
 export default LandingPage;

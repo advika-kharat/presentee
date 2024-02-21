@@ -4,6 +4,7 @@ import {
   Text,
   KeyboardAvoidingView,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
@@ -22,6 +23,7 @@ import {
 } from "firebase/firestore";
 
 import { NavigationProp } from "@react-navigation/native";
+import Navbar from "../Navbar";
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
@@ -67,38 +69,49 @@ const CreateCourse = ({ navigation }: RouterProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        mode="outlined"
-        placeholder="Course Name"
-        outlineColor="black"
-        activeOutlineColor="black"
-        style={styles.input}
-        onChangeText={(text) => {
-          setCourse(text);
-          setError(""); // Reset error message when typing
-        }}
-      />
+    <ImageBackground
+      source={require("../assets/background.jpg")}
+      style={styles.background}
+    >
+      <Navbar navigation={navigation} onlyBackAction={true} />
+      <View style={styles.container}>
+        <TextInput
+          mode="outlined"
+          placeholder="Course Name"
+          outlineColor="black"
+          activeOutlineColor="black"
+          style={styles.input}
+          onChangeText={(text) => {
+            setCourse(text);
+            setError(""); // Reset error message when typing
+          }}
+        />
 
-      {error ? <Text>{error}</Text> : null}
+        {error ? <Text>{error}</Text> : null}
 
-      {loading ? (
-        <ActivityIndicator size="large" color="black" />
-      ) : (
-        <Button
-          mode="contained"
-          buttonColor="black"
-          style={styles.button}
-          onPress={addCourse}
-        >
-          Add Course
-        </Button>
-      )}
-    </View>
+        {loading ? (
+          <ActivityIndicator size="large" color="black" />
+        ) : (
+          <Button
+            mode="contained"
+            buttonColor="black"
+            style={styles.button}
+            onPress={addCourse}
+          >
+            Add Course
+          </Button>
+        )}
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",

@@ -1,4 +1,10 @@
-import { View, StyleSheet, Text, KeyboardAvoidingView, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  KeyboardAvoidingView,
+  ImageBackground,
+} from "react-native";
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useState } from "react";
@@ -39,69 +45,72 @@ const TeacherLogin = ({ navigation }: RouterProps) => {
 
   return (
     <ImageBackground
-      source={require('../assets/background.jpg')}
+      source={require("../assets/background.jpg")}
       style={styles.background}
     >
-      <Navbar navigation={navigation} onlyBackAction={true}/>
-    <View style={styles.container}>
-      <KeyboardAvoidingView behavior="padding"  style={{flex: 1, justifyContent: 'center',}}>
-      <Text style={styles.textStyle}>Log in as Teacher</Text>
-        <TextInput
-          style={styles.input}
-          mode="outlined"
-          placeholder="Email"
-          outlineColor="black"
-          activeOutlineColor="black"
-          onChangeText={(text) => setEmail(text)}
-        />
-
-        <View>
+      <Navbar navigation={navigation} onlyBackAction={true} />
+      <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={{ flex: 1, justifyContent: "center" }}
+        >
+          <Text style={styles.textStyle}>Log in as Teacher</Text>
           <TextInput
             style={styles.input}
-            secureTextEntry={!showPassword}
             mode="outlined"
-            placeholder="Password"
+            placeholder="Email"
             outlineColor="black"
             activeOutlineColor="black"
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={(text) => setEmail(text)}
           />
-          <MaterialCommunityIcons
-            name={showPassword ? "eye-off" : "eye"}
-            size={24}
-            color="#aaa"
-            style={styles.icon}
-            onPress={toggleShowPassword}
-          />
-        </View>
 
-        {loading ? (
-          <ActivityIndicator size="large" color="black" />
-        ) : (
           <View>
-            <Button
-              mode="contained"
-              buttonColor="black"
-              style={styles.button}
-              onPress={() => {
-                signIn();
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              mode="text"
-              textColor="black"
-              style={styles.button}
-              onPress={() => {
-                navigation.navigate("TeacherRegister");
-              }}
-            >
-              Don't have an account? Sign Up
-            </Button>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={!showPassword}
+              mode="outlined"
+              placeholder="Password"
+              outlineColor="black"
+              activeOutlineColor="black"
+              onChangeText={(text) => setPassword(text)}
+            />
+            <MaterialCommunityIcons
+              name={showPassword ? "eye-off" : "eye"}
+              size={24}
+              color="#aaa"
+              style={styles.icon}
+              onPress={toggleShowPassword}
+            />
           </View>
-        )}
-      </KeyboardAvoidingView>
-    </View>
+
+          {loading ? (
+            <ActivityIndicator size="large" color="black" />
+          ) : (
+            <View>
+              <Button
+                mode="contained"
+                buttonColor="black"
+                style={styles.button}
+                onPress={() => {
+                  signIn();
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                mode="text"
+                textColor="black"
+                style={styles.button}
+                onPress={() => {
+                  navigation.navigate("TeacherRegister");
+                }}
+              >
+                Don't have an account? Sign Up
+              </Button>
+            </View>
+          )}
+        </KeyboardAvoidingView>
+      </View>
     </ImageBackground>
   );
 };
@@ -112,16 +121,17 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center",
   },
+
   container: {
     flex: 1,
     justifyContent: "center",
   },
   textStyle: {
-    justifyContent: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    textAlign: "center",
     fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "bold",
+    color: "black",
     margin: 10,
     padding: 10,
     lineHeight: 28,

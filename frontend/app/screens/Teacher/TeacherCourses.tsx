@@ -6,11 +6,13 @@ import {
   FlatList,
   RefreshControl,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import { FAB, Button } from "react-native-paper";
 import { NavigationProp } from "@react-navigation/native";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../../FirebaseConfig";
+import Navbar from "../Navbar";
 
 interface Course {
   courseName: string;
@@ -67,34 +69,45 @@ const TeacherCourses = ({ navigation }: RouterProps) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <>
-        <Button
-          mode="contained"
-          buttonColor="black"
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate("CreateCourse");
-          }}
-        >
-          Add Courses
-        </Button>
+    <ImageBackground
+      source={require("../assets/background.jpg")}
+      style={styles.background}
+    >
+      <Navbar navigation={navigation} onlyBackAction={true} />
+      <View style={styles.container}>
+        <>
+          <Button
+            mode="contained"
+            buttonColor="#4B61CD"
+            style={styles.button}
+            onPress={() => {
+              navigation.navigate("CreateCourse");
+            }}
+          >
+            Add Courses
+          </Button>
 
-        <FlatList
-          data={courses}
-          renderItem={renderCourseItem}
-          keyExtractor={(item, index) => `${item.courseName}_${index}`}
-          contentContainerStyle={styles.flatListContent}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={fetchCourses} />
-          }
-        />
-      </>
-    </View>
+          <FlatList
+            data={courses}
+            renderItem={renderCourseItem}
+            keyExtractor={(item, index) => `${item.courseName}_${index}`}
+            contentContainerStyle={styles.flatListContent}
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={fetchCourses} />
+            }
+          />
+        </>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
   },
@@ -103,12 +116,12 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   courseItemContainer: {
-    backgroundColor: "lightgrey",
+    backgroundColor: "white",
     marginVertical: 5,
     padding: 10,
   },
   fab: {
-    backgroundColor: "black",
+    backgroundColor: "#67C3ED",
     // position: "absolute",
     right: 10,
     bottom: 10,

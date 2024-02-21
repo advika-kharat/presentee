@@ -5,6 +5,8 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   FlatList,
+  ImageBackground,
+  RefreshControl,
 } from "react-native";
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
@@ -21,12 +23,14 @@ interface Course {
 }
 
 import { NavigationProp } from "@react-navigation/native";
+import Navbar from "../Navbar";
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
 
 const EnrollCourse = ({ navigation }: RouterProps) => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(false);
   const fetchCourses = async () => {
     try {
       const currentUser = FIREBASE_AUTH.currentUser;
@@ -56,27 +60,47 @@ const EnrollCourse = ({ navigation }: RouterProps) => {
       <Text>Instructor: {item.instructor}</Text>
     </View>
   );
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   return (
-    <View>
-      <Text>Enrol</Text>
-      <FlatList
-        data={courses}
-        renderItem={renderCourseItem}
-        keyExtractor={(item, index) => `${item.courseName}_${index}`}
-      />
-    </View>
+    <ImageBackground
+      source={require("../assets/background.jpg")}
+      style={styles.background}
+    >
+      <Navbar navigation={navigation} onlyBackAction={true} />
+      <View style={{ flex: 1 }}>
+        <Text>Enrol</Text>
+        <FlatList
+          data={courses}
+          renderItem={renderCourseItem}
+          keyExtractor={(item, index) => `${item.courseName}_${index}`}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={fetchCourses} />
+          }
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
   },
   courseItemContainer: {
-    backgroundColor: "lightgrey",
+    backgroundColor: "white",
     marginVertical: 5,
     padding: 10,
   },

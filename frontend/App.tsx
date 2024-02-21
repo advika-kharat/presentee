@@ -19,6 +19,10 @@ import TeacherLogin from "./app/screens/Teacher/TeacherLogin";
 import TeacherProfile from "./app/screens/Teacher/TeacherProfile";
 import TeacherRegister from "./app/screens/Teacher/TeacherRegister";
 import Navbar from "./app/screens/Navbar";
+import TeacherCourses from "./app/screens/Teacher/TeacherCourses";
+import CreateCourse from "./app/screens/Teacher/CreateCourse";
+import StudentCourses from "./app/screens/Student/StudentCourses";
+import EnrollCourse from "./app/screens/Student/EnrollCourse";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,13 +39,65 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LandingPage">
-        <Stack.Screen name="LandingPage" component={LandingPage} options={{headerShown: false}} />
-        <Stack.Screen name="StudentLogin" component={StudentLogin} options={{headerShown: false}} />
-        <Stack.Screen name="StudentRegister" component={StudentRegister} options={{headerShown: false}} />
-        <Stack.Screen name="StudentProfile" component={StudentProfile} options={{headerShown: false}} />
-        <Stack.Screen name="TeacherLogin" component={TeacherLogin} options={{headerShown: false}} />
-        <Stack.Screen name="TeacherRegister" component={TeacherRegister} options={{headerShown: false}} />
-        <Stack.Screen name="TeacherProfile" component={TeacherProfile} options={{headerShown: false}} />
+        <Stack.Screen
+          name="LandingPage"
+          component={LandingPage}
+          options={{ headerShown: false }}
+        />
+
+        {/* student routes */}
+        <Stack.Screen
+          name="StudentLogin"
+          component={StudentLogin}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StudentRegister"
+          component={StudentRegister}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StudentProfile"
+          component={StudentProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StudentCourses"
+          component={StudentCourses}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EnrollCourse"
+          component={EnrollCourse}
+          options={{ headerShown: false }}
+        />
+
+        {/* teacher routes */}
+        <Stack.Screen
+          name="TeacherLogin"
+          component={TeacherLogin}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeacherRegister"
+          component={TeacherRegister}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeacherProfile"
+          component={TeacherProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeacherCourses"
+          component={TeacherCourses}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CreateCourse"
+          component={CreateCourse}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

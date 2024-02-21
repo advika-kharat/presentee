@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../../FirebaseConfig";
 import { ActivityIndicator, Button, FAB } from "react-native-paper";
 import { doc, getDoc } from "firebase/firestore";
 
 import { NavigationProp } from "@react-navigation/native";
+import Navbar from "../Navbar";
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
@@ -20,22 +27,34 @@ const StudentCourses = ({ navigation }: RouterProps) => {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.addButtonContainer}>
-        <Text style={styles.addCourseText}>Add Course</Text>
-        <FAB
-          icon="plus"
-          style={styles.fab}
-          color="white"
-          onPress={() => navigation.navigate("EnrollCourse")}
-        />
+    <ImageBackground
+      source={require("../assets/background.jpg")}
+      style={styles.background}
+    >
+      <Navbar navigation={navigation} onlyBackAction={true} />
+      <View style={styles.container}>
+        <View style={styles.addButtonContainer}>
+          <Text style={styles.addCourseText}>Add Course</Text>
+          <FAB
+            icon="plus"
+            style={styles.fab}
+            color="white"
+            onPress={() => navigation.navigate("EnrollCourse")}
+          />
+        </View>
+        {loading ? <ActivityIndicator size="large" color="black" /> : <></>}
       </View>
-      {loading ? <ActivityIndicator size="large" color="black" /> : <></>}
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
+
   container: {
     flex: 1,
   },
