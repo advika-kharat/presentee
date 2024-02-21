@@ -13,40 +13,11 @@ const StudentCourses = ({ navigation }: RouterProps) => {
   const [courses, setCourses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchStudentDetails = async () => {
-    setLoading(true);
-    try {
-      const currentUser = FIREBASE_AUTH.currentUser;
-      if (currentUser) {
-        const docRef = doc(FIRESTORE_DB, "Student", currentUser.email || "");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const studentData = docSnap.data();
-          if (studentData && Array.isArray(studentData.courses)) {
-            setCourses(studentData.courses);
-          }
-        } else {
-          console.log("No such document!");
-        }
-      }
-    } catch (e: any) {
-      console.log(e.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchStudentDetails();
-  }, []);
-
   const renderCourseItem = ({ item }: { item: string }) => (
     <View style={styles.courseItemContainer}>
       <Text>{item}</Text>
     </View>
   );
-
-  const keyExtractor = (item: string, index: number) => `${item}_${index}`;
 
   return (
     <View style={styles.container}>
@@ -55,20 +26,11 @@ const StudentCourses = ({ navigation }: RouterProps) => {
         <FAB
           icon="plus"
           style={styles.fab}
-          onPress={() => navigation.navigate("EnrollCourse")}
           color="white"
+          onPress={() => navigation.navigate("EnrollCourse")}
         />
       </View>
-      {loading ? (
-        <ActivityIndicator size="large" color="black" />
-      ) : (
-        <FlatList
-          data={[...courses]}
-          renderItem={renderCourseItem}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={styles.flatListContent}
-        />
-      )}
+      {loading ? <ActivityIndicator size="large" color="black" /> : <></>}
     </View>
   );
 };

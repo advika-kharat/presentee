@@ -29,6 +29,19 @@ const EnrollCourse = ({ navigation }: RouterProps) => {
   const [courses, setCourses] = useState<Course[]>([]);
   const fetchCourses = async () => {
     try {
+      const currentUser = FIREBASE_AUTH.currentUser;
+      if (currentUser) {
+        const querySnapshot = await getDocs(
+          collection(FIRESTORE_DB, "Courses")
+        );
+        const courseData: Course[] = [];
+        querySnapshot.forEach((doc) => {
+          const { courseName, instructor } = doc.data();
+          courseData.push({ courseName, instructor });
+        });
+        console.log(courseData);
+        setCourses(courseData);
+      }
     } catch (error) {
       console.error("Error fetching courses:", error);
     }

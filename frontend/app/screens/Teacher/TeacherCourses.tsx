@@ -38,6 +38,7 @@ const TeacherCourses = ({ navigation }: RouterProps) => {
           const { courseName, instructor } = doc.data();
           courseData.push({ courseName, instructor });
         });
+        console.log(courseData);
         setCourses(courseData);
       }
     } catch (error: any) {
@@ -84,6 +85,9 @@ const TeacherCourses = ({ navigation }: RouterProps) => {
           renderItem={renderCourseItem}
           keyExtractor={(item, index) => `${item.courseName}_${index}`}
           contentContainerStyle={styles.flatListContent}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={fetchCourses} />
+          }
         />
       </>
     </View>
