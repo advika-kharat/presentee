@@ -26,7 +26,7 @@ const TeacherLogin = ({ navigation }: RouterProps) => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      navigation.navigate("TeacherProfile");
+      navigation.navigate("TeacherCourses");
       console.log(response);
     } catch (error: any) {
       console.log(error);

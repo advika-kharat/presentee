@@ -57,7 +57,7 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
         courses: [],
       });
 
-      navigation.navigate("TeacherProfile");
+      navigation.navigate("TeacherCourses");
       console.log("User registered successfully:", userCredential.user);
     } catch (error: any) {
       console.log(error);

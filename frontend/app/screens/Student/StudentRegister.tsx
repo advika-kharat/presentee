@@ -59,7 +59,7 @@ const StudentRegister = ({ navigation }: RouterProps) => {
         courses: [],
       });
 
-      navigation.navigate("StudentProfile");
+      navigation.navigate("StudentCourses");
       console.log("User registered successfully:", userCredential.user);
     } catch (error: any) {
       console.log(error);

@@ -12,6 +12,16 @@ import TeacherRegister from "./Teacher/TeacherRegister";
 import LandingPage from "./LandingPage";
 import TeacherProfile from "./Teacher/TeacherProfile";
 import StudentProfile from "./Student/StudentProfile";
+import TeacherCourses from "./Teacher/TeacherCourses";
+import StudentCourses from "./Student/StudentCourses";
+import { Appbar, FAB } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CreateCourse from "./Teacher/CreateCourse";
+import EnrollCourse from "./Student/EnrollCourse";
+
+const BOTTOM_APPBAR_HEIGHT = 80;
+const MEDIUM_FAB_HEIGHT = 56;
+
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
@@ -38,6 +48,16 @@ const StudentLayout = () => {
         component={StudentProfile}
         options={{ headerShown: false }}
       />
+      <StudentStack.Screen
+        name="StudentCourses"
+        component={StudentCourses}
+        options={{ headerShown: false }}
+      />
+      <StudentStack.Screen
+        name="EnrollCourse"
+        component={EnrollCourse}
+        options={{ headerShown: false }}
+      />
     </StudentStack.Navigator>
   );
 };
@@ -62,11 +82,22 @@ const TeacherLayout = () => {
         component={TeacherProfile}
         options={{ headerShown: false }}
       />
+      <TeacherStack.Screen
+        name="TeacherCourses"
+        component={TeacherCourses}
+        options={{ headerShown: false }}
+      />
+      <TeacherStack.Screen
+        name="CreateCourse"
+        component={CreateCourse}
+        options={{ headerShown: false }}
+      />
     </TeacherStack.Navigator>
   );
 };
 
 const Home = ({ navigation }: RouterProps) => {
+  const { bottom } = useSafeAreaInsets();
   return (
     <View style={styles.container}>
       <MainStack.Navigator>

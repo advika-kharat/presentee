@@ -32,7 +32,6 @@ const StudentProfile = ({ navigation }: RouterProps) => {
           setAttendace(student.attendance);
           console.log("Document data:", docSnap.data());
         } else {
-          // docSnap.data() will be undefined in this case
           console.log("No such document!");
         }
       }
