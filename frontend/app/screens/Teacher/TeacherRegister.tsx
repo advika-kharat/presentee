@@ -60,7 +60,7 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
         courses: [],
       });
 
-      navigation.navigate("TeacherProfile");
+      navigation.navigate("TeacherCourses");
       console.log("User registered successfully:", userCredential.user);
     } catch (error: any) {
       console.log(error);
@@ -72,7 +72,7 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
 
   return (
     <ImageBackground
-      source={require('../assets/background.jpg')}
+      source={require("../assets/background.jpg")}
       style={styles.background}
     >
       <Navbar navigation={navigation} onlyBackAction={true} />
@@ -141,31 +141,35 @@ const TeacherRegister = ({ navigation }: RouterProps) => {
             />
           </View>
 
-          {passwordValidation && <View style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
-            {validated ? (
-              <Text> Passwords Match</Text>
-            ) : (
-              <Text> Passwords Do not Match</Text>
-            )}
-            <PasswordValidate
-              newPassword={password1}
-              confirmPassword={password2}
-              validationRules={[
-                {
-                  key: "MIN_LENGTH",
-                  ruleValue: 9,
-                  label: "Should contain more than 9 characters",
-                },
-                { key: "LOWERCASE_LETTER" },
-                { key: "UPPERCASE_LETTER" },
-                { key: "NUMERIC" },
-                { key: "PASSWORDS_MATCH" },
-              ]}
-              onPasswordValidateChange={(validatedBoolean) =>
-                setValidated(validatedBoolean)
-              }
-            />
-          </View>}
+          {passwordValidation && (
+            <View
+              style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
+            >
+              {validated ? (
+                <Text> Passwords Match</Text>
+              ) : (
+                <Text> Passwords Do not Match</Text>
+              )}
+              <PasswordValidate
+                newPassword={password1}
+                confirmPassword={password2}
+                validationRules={[
+                  {
+                    key: "MIN_LENGTH",
+                    ruleValue: 9,
+                    label: "Should contain more than 9 characters",
+                  },
+                  { key: "LOWERCASE_LETTER" },
+                  { key: "UPPERCASE_LETTER" },
+                  { key: "NUMERIC" },
+                  { key: "PASSWORDS_MATCH" },
+                ]}
+                onPasswordValidateChange={(validatedBoolean) =>
+                  setValidated(validatedBoolean)
+                }
+              />
+            </View>
+          )}
 
           {loading ? (
             <ActivityIndicator size="large" color="black" />
@@ -211,11 +215,11 @@ const styles = StyleSheet.create({
     marginTop: "20%",
   },
   textStyle: {
-    justifyContent: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    textAlign: "center",
     fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "bold",
+    color: "black",
     margin: 10,
     padding: 10,
     lineHeight: 28,
