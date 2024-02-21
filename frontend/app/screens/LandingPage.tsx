@@ -1,14 +1,7 @@
+import React from "react";
 import { View, Text, StyleSheet, ImageBackground } from "react-native";
-import React, { useState } from "react";
 import { Button } from "react-native-paper";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer, NavigationProp } from "@react-navigation/native";
-import Details from "./Details";
-import List from "./List";
-import StudentLogin from "./Student/StudentLogin";
-import StudentRegister from "./Student/StudentRegister";
-import TeacherLogin from "./Teacher/TeacherLogin";
-import TeacherRegister from "./Teacher/TeacherRegister";
+import { NavigationProp } from "@react-navigation/native";
 import LandingNavbar from "./LandingNavbar";
 
 interface RouterProps {
@@ -17,33 +10,46 @@ interface RouterProps {
 
 const LandingPage = ({ navigation }: RouterProps) => {
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require('./assets/background.jpg')}
+      style={styles.background}
+    >
       <LandingNavbar/>
-      <View style={styles.buttonsContainer}>
-        <Button
-          onPress={() => {
-            navigation.navigate("StudentLogin");
-          }}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Student</Text>
-        </Button>
-        <Button
-          onPress={() => {
-            navigation.navigate("TeacherLogin");
-          }}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Teacher</Text>
-        </Button>
+      <View style={styles.container}>
+        <View style={styles.buttonsContainer}>
+          <Button
+            mode="contained"
+            onPress={() => {
+              navigation.navigate("StudentLogin");
+            }}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Student</Text>
+          </Button>
+          <Button
+            mode="contained"
+            onPress={() => {
+              navigation.navigate("TeacherLogin");
+            }}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Teacher</Text>
+          </Button>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
+    padding: 20,
   },
   buttonsContainer: {
     flex: 1,
@@ -51,26 +57,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    height: 100,
-    width: 200,
     borderRadius: 30,
     backgroundColor: '#4fade3',
-    margin: 20,
-    padding: 30,
-    elevation: 10,
-    shadowOffset: {
-      height: 10,
-      width: 10,
-    },
-    shadowOpacity: 1,
+    margin: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    elevation: 5,
   },
   buttonText: {
-    justifyContent: 'center',
-    textAlign: 'center',
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: 'black',
-    lineHeight: 28,
+    color: 'white',
   }
 })
 

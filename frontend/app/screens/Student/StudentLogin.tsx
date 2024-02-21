@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, KeyboardAvoidingView } from "react-native";
+import { View, StyleSheet, Text, KeyboardAvoidingView, ImageBackground } from "react-native";
 import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useState } from "react";
@@ -39,70 +39,80 @@ const StudentLogin = ({ navigation }: RouterProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Navbar navigation={navigation} onlyBackAction={true}/>
-      <KeyboardAvoidingView behavior="padding" style={{flex: 1, justifyContent: 'center',}}>
-        <Text style={styles.textStyle}>Log in as Student</Text>
-        <TextInput
-          style={styles.input}
-          mode="outlined"
-          placeholder="Email"
-          outlineColor="black"
-          activeOutlineColor="black"
-          onChangeText={(text) => setEmail(text)}
-        />
-
-        <View>
+    <ImageBackground
+      source={require('../assets/background.jpg')}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <Navbar navigation={navigation} onlyBackAction={true}/>
+        <KeyboardAvoidingView behavior="padding" style={{flex: 1, justifyContent: 'center',}}>
+          <Text style={styles.textStyle}>Log in as Student</Text>
           <TextInput
             style={styles.input}
-            secureTextEntry={!showPassword}
             mode="outlined"
-            placeholder="Password"
+            placeholder="Email"
             outlineColor="black"
             activeOutlineColor="black"
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={(text) => setEmail(text)}
           />
-          <MaterialCommunityIcons
-            name={showPassword ? "eye-off" : "eye"}
-            size={24}
-            color="#aaa"
-            style={styles.icon}
-            onPress={toggleShowPassword}
-          />
-        </View>
 
-        {loading ? (
-          <ActivityIndicator size="large" color="black" />
-        ) : (
           <View>
-            <Button
-              mode="contained"
-              buttonColor="black"
-              style={styles.button}
-              onPress={() => {
-                signIn();
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              mode="text"
-              textColor="black"
-              style={styles.button}
-              onPress={() => {
-                navigation.navigate("StudentRegister");
-              }}
-            >
-              Don't have an account? Sign Up
-            </Button>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={!showPassword}
+              mode="outlined"
+              placeholder="Password"
+              outlineColor="black"
+              activeOutlineColor="black"
+              onChangeText={(text) => setPassword(text)}
+            />
+            <MaterialCommunityIcons
+              name={showPassword ? "eye-off" : "eye"}
+              size={24}
+              color="#aaa"
+              style={styles.icon}
+              onPress={toggleShowPassword}
+            />
           </View>
-        )}
-      </KeyboardAvoidingView>
-    </View>
+
+          {loading ? (
+            <ActivityIndicator size="large" color="black" />
+          ) : (
+            <View>
+              <Button
+                mode="contained"
+                buttonColor="black"
+                style={styles.button}
+                onPress={() => {
+                  signIn();
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                mode="text"
+                textColor="black"
+                style={styles.button}
+                onPress={() => {
+                  navigation.navigate("StudentRegister");
+                }}
+              >
+                Don't have an account? Sign Up
+              </Button>
+            </View>
+          )}
+        </KeyboardAvoidingView>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
