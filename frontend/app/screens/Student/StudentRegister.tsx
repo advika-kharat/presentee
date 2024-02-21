@@ -167,6 +167,7 @@ const StudentRegister = ({ navigation }: RouterProps) => {
               { key: "LOWERCASE_LETTER" },
               { key: "UPPERCASE_LETTER" },
               { key: "NUMERIC" },
+              { key: "PASSWORDS_MATCH" },
             ]}
             onPasswordValidateChange={(validatedBoolean) =>
               setValidated(validatedBoolean)
