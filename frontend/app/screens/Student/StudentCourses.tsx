@@ -35,9 +35,14 @@ const StudentCourses = ({ navigation }: RouterProps) => {
   const [courses, setCourses] = useState<Student["courses"]>([]);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
   const fetchCourses = async () => {
     setLoading(true);
     try {
+      // Fetch courses from Firestore
       const currentUser = FIREBASE_AUTH.currentUser;
       if (currentUser) {
         const studentEmail = currentUser.email;
@@ -45,27 +50,31 @@ const StudentCourses = ({ navigation }: RouterProps) => {
         const studentSnap = await getDoc(studentDoc);
         if (studentSnap.exists()) {
           const studentData = studentSnap.data() as Student;
-          if (studentData && studentData.courses) {
-            setCourses(studentData.courses);
-          }
+          setCourses(studentData.courses);
         }
       }
-    } catch (error: any) {
-      console.log("Error fetching courses:", error.message);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchCourses();
-  }, []);
+  const calculateAttendancePercentage = (courseName: String) => {
+    const courseAttendances = courses.filter(
+      (course) => course.courseName === courseName && course.attendedOn
+    );
 
-  const calculatePercentage = (attendedOn: { present: boolean }[]) => {
-    const total = attendedOn.length;
-    const presentCount = attendedOn.filter((item) => item.present).length;
-    const percentage = (presentCount / total) * 100 || 0;
-    return percentage.toFixed(2);
+    const totalAttendances = courseAttendances.length;
+    const presentAttendances = courseAttendances.filter(
+      (course) => course.attendedOn.present
+    ).length;
+
+    if (totalAttendances === 0) {
+      return 0; // Avoid division by zero
+    }
+
+    return (presentAttendances / totalAttendances) * 100;
   };
 
   return (
@@ -84,19 +93,36 @@ const StudentCourses = ({ navigation }: RouterProps) => {
               <RefreshControl refreshing={loading} onRefresh={fetchCourses} />
             }
           >
-            {courses.map((course, index) => (
-              <View style={styles.courseItemContainer} key={index}>
-                <Text>{course.courseName}</Text>
-                <Text>{calculatePercentage([course.attendedOn])}%</Text>
-                <Button
-                  style={styles.button}
-                  labelStyle={styles.buttonText}
-                  buttonColor="#B8E2FC"
-                >
-                  View Attendance
-                </Button>
-              </View>
-            ))}
+            {courses.map((course, index) => {
+              if (
+                index === 0 ||
+                course.courseName !== courses[index - 1].courseName
+              ) {
+                const percentage = calculateAttendancePercentage(
+                  course.courseName
+                );
+                return (
+                  <View key={index} style={styles.courseItemContainer}>
+                    <Text style={{ fontWeight: "500" }}>
+                      {course.courseName}
+                    </Text>
+                    <Text
+                      style={{
+                        position: "absolute",
+                        right: 10,
+                        margin: 20,
+                        verticalAlign: "middle",
+                        color: percentage < 75.0 ? "red" : "green",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {percentage.toFixed(2)}%
+                    </Text>
+                  </View>
+                );
+              }
+              return null; // Skip displaying for duplicate course names
+            })}
           </ScrollView>
         )}
         <FAB
@@ -132,6 +158,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginLeft: "auto",
     marginRight: "auto",
+    elevation: 5,
   },
   button: {
     position: "absolute",

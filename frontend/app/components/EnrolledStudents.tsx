@@ -1,8 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { Checkbox } from "react-native-paper";
+import StudentAttendance from "./StudentAttendance";
 
-const EnrolledStudents = ({ studentName, studentEmail, studentUid }: any) => {
+const EnrolledStudents = ({
+  studentName,
+  studentEmail,
+  studentUid,
+  courseName,
+}: any) => {
   return (
     <View style={styles.container}>
       <Text
@@ -12,6 +18,7 @@ const EnrolledStudents = ({ studentName, studentEmail, studentUid }: any) => {
       >
         {studentName}
       </Text>
+
       <Text
         style={{
           position: "absolute",

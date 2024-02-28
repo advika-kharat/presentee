@@ -72,10 +72,12 @@ const SecondRoute = ({
   loading,
   students,
   fetchStudentsEnrolled,
+  courseName,
 }: {
   loading: boolean;
   students: any[];
   fetchStudentsEnrolled: () => void;
+  courseName: any;
 }) => {
   // useEffect(() => {
   //   fetchStudentsEnrolled();
@@ -98,6 +100,7 @@ const SecondRoute = ({
               studentName={student.name}
               studentEmail={student.email}
               studentUid={student.uid}
+              courseName={courseName}
             />
           ))}
         </ScrollView>
@@ -134,6 +137,7 @@ const renderScene = ({
         loading={loading}
         students={students}
         fetchStudentsEnrolled={fetchStudentsEnrolled}
+        courseName={courseName}
       />
     ),
   });
