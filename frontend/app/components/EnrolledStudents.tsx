@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { Checkbox } from "react-native-paper";
+import { Checkbox, DataTable } from "react-native-paper";
 import StudentAttendance from "./StudentAttendance";
+import { DarkTheme } from "@react-navigation/native";
 
 const EnrolledStudents = ({
   studentName,
@@ -11,38 +12,34 @@ const EnrolledStudents = ({
 }: any) => {
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 16,
-        }}
-      >
-        {studentName}
-      </Text>
+      <DataTable>
+        <DataTable.Row>
+          <DataTable.Cell>{studentName}</DataTable.Cell>
 
-      <Text
-        style={{
-          position: "absolute",
-          right: 10,
-          top: 10,
-          fontSize: 16,
-        }}
-      >
-        {studentUid}
-      </Text>
+          <DataTable.Cell>{studentUid}</DataTable.Cell>
+          <DataTable.Cell>
+            {" "}
+            <StudentAttendance
+              studentEmail={studentEmail}
+              studentName={studentName}
+              studentUid={studentUid}
+              courseName={courseName}
+            />
+          </DataTable.Cell>
+        </DataTable.Row>
+      </DataTable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     backgroundColor: "white",
-    borderBottomWidth: 4,
-    borderBottomColor: "#C4E0FF",
+
     padding: 10,
-    width: "90%",
-    marginLeft: "auto",
-    marginRight: "auto",
+    // width: "90%",
+    // marginLeft: "auto",
+    // marginRight: "auto",
   },
 });
 

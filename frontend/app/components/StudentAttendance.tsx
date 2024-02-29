@@ -4,24 +4,11 @@ import {
   ActivityIndicator,
   RefreshControl,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Timestamp, doc, getDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FirebaseConfig";
-import styles from "react-native-password-validate-checklist/src/styles";
-
-interface Student {
-  name: String;
-  uid: String;
-  email: String;
-  courses: {
-    attendedOn: {
-      present: boolean;
-      date: Timestamp;
-    };
-    courseName: String;
-  }[];
-}
 
 const StudentAttendance = ({
   studentName,
@@ -29,92 +16,62 @@ const StudentAttendance = ({
   studentUid,
   courseName,
 }: any) => {
-  const [courses, setCourses] = useState<Student["courses"]>([]);
   const [loading, setLoading] = useState(false);
+  const [attendancePercentage, setAttendancePercentage] = useState<
+    number | null
+  >(null);
 
-  useEffect(() => {
-    fetchCourses();
-  }, []);
-
-  const fetchCourses = async () => {
+  const fetchAttendancePercentage = async () => {
     setLoading(true);
     try {
       const studentDocRef = doc(FIRESTORE_DB, "Student", studentEmail || "");
-      console.log("Student Document Reference:", studentDocRef.path);
       const studentSnap = await getDoc(studentDocRef);
       if (studentSnap.exists()) {
-        const studentData = studentSnap.data() as Student;
-        const filteredCourses = studentData.courses.filter(
-          (course) => course.courseName === courseName
+        const studentData = studentSnap.data();
+        //console.log(studentData);
+        const courses = studentData?.courses || [];
+        const filteredCourses = courses.filter(
+          (course: any) => course.courseName === courseName && course.attendedOn
         );
-        setCourses(filteredCourses);
+        const totalAttendances = filteredCourses.length;
+        const presentAttendace = filteredCourses.filter(
+          (course: any) => course.attendedOn.present
+        ).length;
+        const percentage =
+          totalAttendances === 0
+            ? 0
+            : (presentAttendace / totalAttendances) * 100;
+        setAttendancePercentage(percentage);
       } else {
-        console.error("Student document does not exist");
+        console.log("student doc doesnt exist");
       }
-    } catch (error) {
-      console.error("Error fetching courses:", error);
+    } catch (e: any) {
+      console.log(e.message);
     } finally {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    fetchAttendancePercentage();
+  }, []);
 
-  const calculateAttendancePercentage = (courseName: String) => {
-    const courseAttendances = courses.filter(
-      (course) => course.courseName === courseName && course.attendedOn
-    );
-
-    const totalAttendances = courseAttendances.length;
-    const presentAttendances = courseAttendances.filter(
-      (course) => course.attendedOn.present
-    ).length;
-
-    if (totalAttendances === 0) {
-      return 0; // Avoid division by zero
-    }
-
-    return (presentAttendances / totalAttendances) * 100;
-  };
+  if (loading) {
+    return <ActivityIndicator size="large" color="black" />;
+  }
 
   return (
     <View>
-      {loading ? (
-        <ActivityIndicator size="large" color="black" />
-      ) : (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={fetchCourses} />
-          }
-        >
-          {courses.map((course, index) => {
-            if (
-              index === 0 ||
-              course.courseName !== courses[index - 1].courseName
-            ) {
-              const percentage = calculateAttendancePercentage(
-                course.courseName
-              );
-              return (
-                <View key={index}>
-                  <Text style={{ fontWeight: "500" }}>{course.courseName}</Text>
-                  <Text
-                    style={{
-                      position: "absolute",
-                      right: 10,
-                      margin: 20,
-                      verticalAlign: "middle",
-                      color: percentage < 75.0 ? "red" : "green",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {percentage.toFixed(2)}%
-                  </Text>
-                </View>
-              );
-            }
-            return null; // Skip displaying for duplicate course names
-          })}
-        </ScrollView>
-      )}
+      <Text
+        style={{
+          fontSize: 16,
+          color:
+            attendancePercentage && attendancePercentage < 75 ? "red" : "green",
+        }}
+      >
+        {attendancePercentage !== null
+          ? attendancePercentage.toFixed(2) + "%"
+          : 0}
+      </Text>
     </View>
   );
 };

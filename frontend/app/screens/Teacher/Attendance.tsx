@@ -11,12 +11,13 @@ import Navbar from "../Navbar";
 import { NavigationProp } from "@react-navigation/native";
 import { getDocs, collection, addDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../../FirebaseConfig";
-import { ActivityIndicator, Button } from "react-native-paper";
+import { ActivityIndicator, Button, DataTable } from "react-native-paper";
 import EnrolledStudents from "../../components/EnrolledStudents";
 import AttendanceHistory from "../../components/AttendanceHistory";
 import { useWindowDimensions } from "react-native";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import Searchbar from "../../components/Seachbar";
+import StudentAttendance from "../../components/StudentAttendance";
 
 const FirstRoute = ({
   courseName,
@@ -93,16 +94,37 @@ const SecondRoute = ({
         <ActivityIndicator />
       ) : (
         <ScrollView>
-          <EnrolledStudents studentName={"Student Name"} studentUid={"UID"} />
-          {students.map((student, index) => (
-            <EnrolledStudents
-              key={index}
-              studentName={student.name}
-              studentEmail={student.email}
-              studentUid={student.uid}
-              courseName={courseName}
-            />
-          ))}
+          <DataTable>
+            <DataTable.Header>
+              <DataTable.Title>Student Name</DataTable.Title>
+              <DataTable.Title>UID</DataTable.Title>
+              <DataTable.Title>Attendance</DataTable.Title>
+            </DataTable.Header>
+
+            {students.map((student, index) => (
+              // <EnrolledStudents
+              //   key={index}
+              //   studentName={student.name}
+              //   studentEmail={student.email}
+              //   studentUid={student.uid}
+              //   courseName={courseName}
+              // />
+
+              <DataTable.Row key={index}>
+                <DataTable.Cell>{student.name}</DataTable.Cell>
+                <DataTable.Cell>{student.uid}</DataTable.Cell>
+                <DataTable.Cell>
+                  {" "}
+                  <StudentAttendance
+                    studentEmail={student.email}
+                    studentName={student.name}
+                    studentUid={student.uid}
+                    courseName={courseName}
+                  />
+                </DataTable.Cell>
+              </DataTable.Row>
+            ))}
+          </DataTable>
         </ScrollView>
       )}
     </View>

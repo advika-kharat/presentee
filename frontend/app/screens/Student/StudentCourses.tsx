@@ -10,6 +10,7 @@ import {
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../../FirebaseConfig";
 import { ActivityIndicator, FAB, Button } from "react-native-paper";
 import { Timestamp, doc, getDoc } from "firebase/firestore";
+import DataTable from "react-native-paper";
 
 import { NavigationProp } from "@react-navigation/native";
 import Navbar from "../Navbar";
