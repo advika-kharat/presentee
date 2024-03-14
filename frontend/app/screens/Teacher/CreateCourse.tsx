@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     width: "60%",
     marginLeft: "auto",
     marginRight: "auto",
+    backgroundColor: "#3C6696",
   },
 });
 

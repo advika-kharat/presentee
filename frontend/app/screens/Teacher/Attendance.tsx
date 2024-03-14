@@ -28,9 +28,9 @@ const FirstRoute = ({
   instructor: string;
   navigation: any;
 }) => (
-  <View style={{ flex: 1, backgroundColor: "white" }}>
+  <View style={{ flex: 1, backgroundColor: "#F0F0F09E" }}>
     <Button
-      buttonColor="#0870BF"
+      buttonColor="#3C6696"
       style={{
         borderRadius: 5,
         width: "90%",
@@ -85,8 +85,15 @@ const SecondRoute = ({
   // }, [fetchStudentsEnrolled]); // Fetch students when the tab is focused
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <Text style={{ margin: 20, fontSize: 20, fontWeight: "500" }}>
+    <View style={{ flex: 1, backgroundColor: "#FFFFFFBD" }}>
+      <Text
+        style={{
+          margin: 20,
+          fontSize: 20,
+          fontWeight: "500",
+          color: "#3C6696",
+        }}
+      >
         Students Enrolled in this course
       </Text>
 
@@ -96,9 +103,16 @@ const SecondRoute = ({
         <ScrollView>
           <DataTable>
             <DataTable.Header>
-              <DataTable.Title>Student Name</DataTable.Title>
-              <DataTable.Title>UID</DataTable.Title>
-              <DataTable.Title>Attendance</DataTable.Title>
+              <DataTable.Title>
+                {" "}
+                <Text style={{ fontSize: 16 }}>Name</Text>
+              </DataTable.Title>
+              <DataTable.Title>
+                <Text style={{ fontSize: 16 }}>UID</Text>
+              </DataTable.Title>
+              <DataTable.Title>
+                <Text style={{ fontSize: 16 }}>Attendance</Text>
+              </DataTable.Title>
             </DataTable.Header>
 
             {students.map((student, index) => (
@@ -111,8 +125,13 @@ const SecondRoute = ({
               // />
 
               <DataTable.Row key={index}>
-                <DataTable.Cell>{student.name}</DataTable.Cell>
-                <DataTable.Cell>{student.uid}</DataTable.Cell>
+                <DataTable.Cell>
+                  <Text style={{ fontSize: 16 }}>{student.name}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell>
+                  {" "}
+                  <Text style={{ fontSize: 16 }}>{student.uid}</Text>
+                </DataTable.Cell>
                 <DataTable.Cell>
                   {" "}
                   <StudentAttendance
@@ -134,14 +153,14 @@ const SecondRoute = ({
 const renderScene = ({
   courseName,
   instructor,
-  navigation, // Add the navigation prop here
+  navigation,
   loading,
   students,
   fetchStudentsEnrolled,
 }: {
   courseName: string;
   instructor: string;
-  navigation: NavigationProp<any, any>; // Add the navigation prop type here
+  navigation: NavigationProp<any, any>;
   loading: boolean;
   students: any[];
   fetchStudentsEnrolled: () => void;
@@ -153,7 +172,7 @@ const renderScene = ({
         instructor={instructor}
         navigation={navigation}
       />
-    ), // Pass navigation to FirstRoute
+    ),
     second: () => (
       <SecondRoute
         loading={loading}
@@ -183,11 +202,9 @@ const Attendance = ({ route, navigation }: { route: any; navigation: any }) => {
   const fetchStudentsEnrolled = async () => {
     setLoading(true);
     try {
-      // Fetch the course document from Firestore
       const courseRef = collection(FIRESTORE_DB, "Courses");
       const querySnapshot = await getDocs(courseRef);
 
-      // Extract the "students" array from the course document
       const enrolledStudents = querySnapshot.docs
         .filter((doc) => doc.data().courseName === courseName)
         .map((doc) => doc.data().students)
@@ -199,7 +216,6 @@ const Attendance = ({ route, navigation }: { route: any; navigation: any }) => {
         uid: student.studentUid,
       }));
 
-      // Update the state with the list of student names
       setStudents(studentInfo);
       console.log(enrolledStudents);
     } catch (error: any) {

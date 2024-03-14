@@ -65,7 +65,7 @@ const TeacherCourses = ({ navigation }: RouterProps) => {
       <View style={{ width: "50%", position: "absolute", right: 10, top: 10 }}>
         <Button
           title="Take Attendance"
-          color={"#35508E"}
+          color={"#3C6696"}
           onPress={() =>
             navigation.navigate("Attendance", {
               courseName: item.courseName,
@@ -100,7 +100,7 @@ const TeacherCourses = ({ navigation }: RouterProps) => {
             icon="plus"
             style={styles.fab}
             color="white"
-            rippleColor={"blue"}
+            rippleColor={"#3C6696"}
             onPress={() => {
               navigation.navigate("CreateCourse");
             }}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     zIndex: 100,
-    backgroundColor: "#0C328A",
+    backgroundColor: "#3C6696",
     position: "absolute",
     bottom: 10,
     right: 10,

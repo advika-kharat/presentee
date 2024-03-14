@@ -108,17 +108,20 @@ const AttendanceHistory = ({
           <Button
             key={index}
             onPress={() => fetchPresentStudents(timestamp)}
-            buttonColor="#f0f0f0"
+            buttonColor="#F0F0F0"
             style={{
               borderRadius: 5,
+              padding: 6,
+              borderWidth: 1,
+              borderColor: "#90B3CED1",
               width: "90%",
               marginLeft: "auto",
               marginRight: "auto",
               marginTop: 5,
             }}
             labelStyle={{
-              color: "#008AF4",
-              fontSize: 20,
+              color: "#3C6696",
+              fontSize: 18,
             }}
           >
             {new Date(timestamp).toLocaleString()}
